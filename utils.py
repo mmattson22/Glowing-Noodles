@@ -115,18 +115,10 @@ def getAllUsers():
     print all_rows
     conn.commit()
     return all_rows
-
-def getProfile(uid):
-    conn = sqlite3.connect('data.db')
-    cur = conn.cursor()
-    q = 'SELECT name,filename,age,color FROM users WHERE users.id = %d'
-    cur.execute(q%uid)
-    row = cur.fetchone()
-    conn.commit()
-    return row
     
 
 #----------------------------------Log In---------------------------------
+#most of these aren't really necessary since we have facebook
     
 def encrypt(word):
     hashp = hashlib.md5()
@@ -177,33 +169,3 @@ def addUser(username,password):
         return True
     conn.commit()
     return False
-
-#addUser("what is this","efdsf")
-#addUser("snaddy project","eeefef")
-#addUser("more users","gggggg")
-#addUser("ok this is the last","dfsdf")
-
-#writePost("im sandy",2)
-#writePost("call me white fang",3)
-#writePost("im also white bread",4)
-#writePost("im the leader fear me",1)
-#writePost("i joined track to run away from my problems",3)
-#writePost("kms",2)
-#writePost("sandy candy pt 4","i may be candy but im not sweet ;)",1)
-
-#writeComment("lol i hate u",1,2)
-#writeComment("who do u think u r",3,3)
-#writeComment("gr8 work snad",1,4)
-#writeComment("maybe your creativity should join the track team",3,6)
-    
-#print getUserPosts(1)
-#print getUserPosts(2)
-#print getUserPosts(3)
-#print getUserPosts(4)
-
-#print getCommentsOnPost(4)
-#print getCommentsOnPost(6)
-#print getCommentsOnPost(7)
-
-#utils.addPic(1,"https://tse2.mm.bing.net/th?id=OIP.M2ce8f1b245901e21446ddfcad805dc07o0&pid=15.1")
-#utils.addPic(2,"https://cinechasquilla.files.wordpress.com/2014/12/24.jpg")
