@@ -11,6 +11,11 @@ def home():
 def about():
     return render_template("about.html")
 
+@app.route('/found', methods = ['GET','POST'])
+def found():
+    return render_template("found.html")
+
+
 if __name__ == '__main__':
         app.secret_key = "hello"
         app.debug = True
