@@ -11,11 +11,19 @@ def home():
 def about():
     return render_template("about.html")
 
+@app.route('/lost', methods = ['GET','POST'])
+def lost():
+    return render_template("lost.html")
+
+@app.route('/found', methods = ['GET','POST'])
+def found():
+    return render_template("found.html")
+
 if __name__ == '__main__':
-        app.secret_key = "hello"
-        app.debug = True
-        app.threaded = True
-        app.run(host='0.0.0.0', port=8000)
+    app.secret_key = "hello"
+    app.debug = True
+    app.threaded = True
+    app.run(host='0.0.0.0', port=8000)
 else:
-        app.secret_key = "hello"
-        app.debug = True
+    app.secret_key = "hello"
+    app.debug = True
