@@ -1,11 +1,18 @@
 from flask import Flask, render_template, session, request
 from flask import redirect, url_for
+import utils
 
 app = Flask(__name__)
 
 @app.route("/", methods = ['GET','POST'])
 def home():
-    return render_template("home.html")
+    if request.method=="GET":
+        return render_template("home.html")
+    else:
+        newPost = request.form['newPost']
+        userID = 1234
+        pic = "link"
+        return utils.writePost(userID, newPost, pic)
 
 @app.route('/about', methods = ['GET','POST'])
 def about():

@@ -10,7 +10,8 @@ def writePost(idu, txt, pic):
     if idp == None:
         idp = 0
     print idp+1
-    q = "INSERT INTO posts(idp, idu, txt, pic) VALUES(?,?,?,?)"
+    print idu
+    q = "INSERT INTO posts(id, uid, content, picture) VALUES(?,?,?,?)"
     cur.execute(q,(idp+1, idu, txt, pic))
     conn.commit()
     return idp + 1
