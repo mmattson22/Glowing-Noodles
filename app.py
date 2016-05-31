@@ -10,6 +10,7 @@ def home():
         return render_template("home.html")
     else:
         newPost = request.form['newPost']
+        print newPost
         userID = 1234
         pic = "link"
         return utils.writePost(userID, newPost, pic)

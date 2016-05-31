@@ -2,19 +2,20 @@ import sqlite3,hashlib
 
 #----------------------------------Writing--------------------------------
 
-def writePost(idu, txt, pic):
+def writePost(idu, newPost, pic):
     conn = sqlite3.connect('data.db')
     cur = conn.cursor()
     q = "SELECT MAX(id) FROM posts"
     idp = cur.execute(q).fetchone()[0]
     if idp == None:
         idp = 0
-    print idp+1
+    idp += 1
     print idu
+    print newPost
     q = "INSERT INTO posts(id, uid, content, picture) VALUES(?,?,?,?)"
-    cur.execute(q,(idp+1, idu, txt, pic))
+    cur.execute(q,(idp, idu, newPost, pic))
     conn.commit()
-    return idp + 1
+    return str(idp)
 
 def writeComment(idp,idu,txt):
     conn = sqlite3.connect('data.db')
