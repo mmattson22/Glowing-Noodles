@@ -25,7 +25,7 @@ def writeComment(idp,idu,txt):
     if idc == None:
         idc = 0
     print idc+1
-    q = "INSERT INTO comments(idc,idp,idu,txt) VALUES(?,?,?,?)"
+    q = "INSERT INTO comments(id,pid,uid,context) VALUES(?,?,?,?)"
     cur.execute(q,(idc+1,idp,idu,txt))
     conn.commit()
     
@@ -101,12 +101,14 @@ def getPost(idp):
 def getAllPosts():
     conn = sqlite3.connect('data.db')
     cur = conn.cursor()
-    q = "SELECT posts.content,posts.pid,posts.uid,users.name,posts.title,datetime(posts.time,'localtime'),users.filename FROM posts, users WHERE users.id = posts.uid ORDER BY posts.pid DESC"
+    q = "SELECT posts.content,posts.id,posts.uid,users.facebookid,posts.content,datetime(posts.time,'localtime'),users.filename FROM posts, users WHERE users.id = posts.uid ORDER BY posts.id DESC"
     cur.execute(q)
     all_rows = cur.fetchall()
     print all_rows
     conn.commit()
     return all_rows
+
+#getAllPosts()
 
 def getAllUsers():
     conn = sqlite3.connect('data.db')
