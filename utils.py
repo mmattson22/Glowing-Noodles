@@ -1,4 +1,4 @@
-import sqlite3,hashlib
+import sqlite3,hashlib, time, datetime
 
 #----------------------------------Writing--------------------------------
 
@@ -101,14 +101,16 @@ def getPost(idp):
 def getAllPosts():
     conn = sqlite3.connect('data.db')
     cur = conn.cursor()
-    q = "SELECT posts.content,posts.id,posts.uid,users.facebookid,posts.content,datetime(posts.time,'localtime'),users.filename FROM posts, users WHERE users.id = posts.uid ORDER BY posts.id DESC"
+    #q = "SELECT posts.content,posts.id,posts.uid,users.facebookid FROM posts, users WHERE users.id = posts.uid ORDER BY posts.id DESC"
+    q = "SELECT posts.content,posts.id,posts.uid FROM posts"
     cur.execute(q)
     all_rows = cur.fetchall()
-    print all_rows
-    conn.commit()
+    for row in all_rows:
+        print row
+    conn.commit()    
     return all_rows
 
-#getAllPosts()
+getAllPosts()
 
 def getAllUsers():
     conn = sqlite3.connect('data.db')
