@@ -1,4 +1,5 @@
 import sqlite3,hashlib, time, datetime
+import json
 
 #----------------------------------Writing--------------------------------
 
@@ -105,10 +106,28 @@ def getAllPosts():
     q = "SELECT posts.content,posts.id,posts.uid FROM posts"
     cur.execute(q)
     all_rows = cur.fetchall()
+
+    #Translate into JSON?
+    r = []
     for row in all_rows:
-        print row
-    conn.commit()    
-    return all_rows
+        r += [dict((cur.description[i][0], value) \
+              for i, value in enumerate(row))]
+
+    with open('params.json', 'w') as f:
+        json.dump(r, f)
+
+    '''
+    with open('params.json', 'r') as f:
+        data = json.load(f)
+        print data
+    '''
+
+    final = []
+    for row in all_rows:
+        final.append(row)
+    
+    conn.commit()
+    return final
 
 getAllPosts()
 
