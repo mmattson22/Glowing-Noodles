@@ -127,9 +127,9 @@ def getAllPosts():
         final.append(row)
     
     conn.commit()
-    return final
+    return r
 
-getAllPosts()
+
 
 def getAllUsers():
     conn = sqlite3.connect('data.db')
@@ -194,3 +194,8 @@ def addUser(username,password):
         return True
     conn.commit()
     return False
+
+
+if __name__ == "__main__":
+    writePost(1234, 'potatoes', "picture")
+    print getAllPosts()
