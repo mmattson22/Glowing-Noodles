@@ -8,6 +8,8 @@ q = "drop table users"
 c.execute(q)
 q = "drop table posts"
 c.execute(q)
+q = "drop table foundPosts"
+c.execute(q)
 q = "drop table comments"
 c.execute(q)
 

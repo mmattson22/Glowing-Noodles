@@ -10,10 +10,17 @@ def home():
         return render_template("home.html")
     else:
         newPost = request.form['newPost']
-        print newPost
+        lostFound = request.form['LostOrFound']
+        print lostFound
         userID = 1234
         pic = "link"
-        utils.writePost(userID, newPost, pic,"lost")
+        if lostFound == "lost":
+            utils.writePost(userID, newPost, pic,"lost")
+            return redirect(url_for("lost"))
+        elif lostFound == "found":
+            utils.writePost(userID, newPost, pic,"found")
+            return redirect(url_for("found"))
+
         return redirect(url_for("lost"))
 
 @app.route('/about', methods = ['GET','POST'])
