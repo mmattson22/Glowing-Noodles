@@ -145,7 +145,16 @@
           <li class="pure-menu-item"><a href="/about" class="pure-menu-link">About</a></li>
 	  <li class="pure-menu-item">	<form class="pure-form">
 	<fieldset style="padding: 0px 0px 0px 0.8em; display:inline">
-          <input type="text" class="pure-input-1-2" placeholder="Search">
+          <input type="text" class="pure-input-1-2" placeholder="Search" list="suggestions">
+	  <datalist id="suggestions">
+	    <option value="#Electronics">
+	    <option value="#Wallet">
+	    <option value="#ID">
+	    <option value="#Metrocard">
+	    <option value="#Jewelry">
+	    <option value="#School Supplies">
+	    <option value="#Other">
+	  </datalist>
           <button type="submit" class="button-small pure-button">Go</button>
 	</fieldset>
       </form></li>
