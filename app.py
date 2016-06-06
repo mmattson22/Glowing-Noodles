@@ -13,7 +13,7 @@ def home():
         print newPost
         userID = 1234
         pic = "link"
-        utils.writePost(userID, newPost, pic)
+        utils.writePost(userID, newPost, pic,"lost")
         return redirect(url_for("lost"))
 
 @app.route('/about', methods = ['GET','POST'])
@@ -23,12 +23,14 @@ def about():
 @app.route('/lost', methods = ['GET','POST'])
 def lost():
     if request.method=="GET":
-        lostPosts = utils.getAllPosts()
-        print lostPosts
+        lostPosts = utils.getAllPosts("lost")
         return render_template("lost.html", lostPosts=lostPosts)
 
 @app.route('/found', methods = ['GET','POST'])
 def found():
+    if request.method=="GET":
+        foundPosts = utils.getAllPosts("found")
+        return render_template("found.html", foundPosts=foundPosts)
     return render_template("found.html")
 
 if __name__ == '__main__':

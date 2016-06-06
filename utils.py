@@ -3,7 +3,7 @@ import json
 
 #----------------------------------Writing--------------------------------
 
-def writePost(idu, newPost, pic):
+def writePost(idu, newPost, pic, lostFound):
     conn = sqlite3.connect('data.db')
     cur = conn.cursor()
     q = "SELECT MAX(id) FROM posts"
@@ -13,7 +13,10 @@ def writePost(idu, newPost, pic):
     idp += 1
     print idu
     print newPost
-    q = "INSERT INTO posts(id, uid, content, picture) VALUES(?,?,?,?)"
+    if lostFound == "lost":
+        q = "INSERT INTO posts(id, uid, content, picture) VALUES(?,?,?,?)"
+    elif lostFound == "found":
+        q = "INSERT INTO foundPosts(id, uid, content, picture) VALUES(?,?,?,?)"
     cur.execute(q,(idp, idu, newPost, pic))
     conn.commit()
     return str(idp)
@@ -99,11 +102,15 @@ def getPost(idp):
     conn.commit()
     return result
 
-def getAllPosts():
+def getAllPosts(lostFound):
     conn = sqlite3.connect('data.db')
     cur = conn.cursor()
     #q = "SELECT posts.content,posts.id,posts.uid,users.facebookid FROM posts, users WHERE users.id = posts.uid ORDER BY posts.id DESC"
-    q = "SELECT posts.content,posts.id,posts.uid FROM posts"
+    if lostFound == "lost":
+        q = "SELECT posts.content,posts.id,posts.uid FROM posts"
+    elif lostFound == "found":
+        q = "SELECT foundPosts.content,foundPosts.id,foundPosts.uid FROM foundPosts"
+                
     cur.execute(q)
     all_rows = cur.fetchall()
 
