@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+
+{% block body %} 
+
+  <div class="pure-g">
+    <div class="pure-u-0 pure-u-md-1-8"></div>
+    <div class="pure-u-1 pure-u-md-3-4">
+      <div class="pure-g post">
+	<div class="pure-u-1 pure-u-lg-1-4"></div>
+	<div class="pure-u-1 pure-u-lg-1-2">
+	  <center> If you have <u>lost</u> something, please go to the <u>Found Items</u> tab above to check if it has already been found.<br>Or click: <a href="/found">this</a><br><br>
+	    If you have <u>found</u> something, please go to the <u>Lost Items</u> tab above to check if it has already been reported missing<br>Or click: <a href="/lost">this</a><br><br>
+	    If you <u>do not</u> see a post for the item, please fill out the form below:<br><br>
+	  <form class="pure-form center" method="post">
+	    <fieldset class="pure-group">
+	      
+	      <select name="LostOrFound">
+		<option value="lost">Lost</option>
+		<option value="found">Found</option>
+	      </select><br><br>
+	      
+	      <textarea class="pure-input-1" name="newPost" placeholder="Description of Item"></textarea><br>
+	      <select multiple name="tagSuggest" style="font-size:90%; padding: 0px 140px 0px 140px;">
+		<option value="" selected="selected">Select a tag below:</option>
+		<option value="#Electronics">#Electronics</option>
+		<option value="#ID">#ID</option>
+		<option value="#Jewelry">#Jewelry</option>
+		<option value="#Metrocard">#Metrocard</option>
+		<option value="#School Supplies">#School Supplies</option>
+		<option value="#Wallet">#Wallet</option>
+		<option value="#Other">#Other</option>
+	      </select><br>
+	      <button class="pure-button" style="font-size:70%;">Post</button>
+	    </fieldset>
+	  </form>
+	</div>
+	<div class="pure-u-1 pure-u-lg-1-4"></div>
+      </div>
+      <div class="pure-g">
+      </div>
+    </div>
+    <div class="pure-u-0 pure-u-md-1-8"></div>
+  </div>
+  <script>
+    (function (window, document) {
+    var menu = document.getElementById('menu'),
+    WINDOW_CHANGE_EVENT = ('onorientationchange' in window) ? 'orientationchange':'resize';
+
+    function toggleHorizontal() {
+    [].forEach.call(
+    document.getElementById('menu').querySelectorAll('.custom-can-transform'),
+    function(el){
+    el.classList.toggle('pure-menu-horizontal');
+    }
+    );
+    };
+
+    function toggleMenu() {
+    // set timeout so that the panel has a chance to roll up
+    // before the menu switches states
+    if (menu.classList.contains('open')) {
+    setTimeout(toggleHorizontal, 500);
+    }
+    else {
+    toggleHorizontal();
+    }
+    menu.classList.toggle('open');
+    document.getElementById('toggle').classList.toggle('x');
+    };
+
+    function closeMenu() {
+    if (menu.classList.contains('open')) {
+    toggleMenu();
+    }
+    }
+
+    document.getElementById('toggle').addEventListener('click', function (e) {
+    toggleMenu();
+    });
+
+    window.addEventListener(WINDOW_CHANGE_EVENT, closeMenu);
+    })(this, this.document);
+
+
+    function statusChangeCallback(response) {
+    console.log('statusChangeCallback');
+    console.log(response);
+    // The response object is returned with a status field that lets the
+    // app know the current login status of the person.
+    // Full docs on the response object can be found in the documentation
+    // for FB.getLoginStatus().
+    if (response.status === 'connected') {
+    // Logged into your app and Facebook.
+    testAPI();
+    } else if (response.status === 'not_authorized') {
+    // The person is logged into Facebook, but not your app.
+    document.getElementById('status').innerHTML = 'Please log ' +
+    'into this app.';
+    } else {
+    // The person is not logged into Facebook, so we're not sure if
+    // they are logged into this app or not.
+    document.getElementById('status').innerHTML = 'Please log ' +
+    'into Facebook.';
+    }
+    }
+    
+    function checkLoginState() {
+    FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+    });
+    }
+    
+    window.fbAsyncInit = function() {
+    FB.init({
+    appId      : '495797037296598',
+    cookie     : true,  // enable cookies to allow the server to access
+    // the session
+    xfbml      : true,  // parse social plugins on this page
+    version    : 'v2.5' // use graph api version 2.5
+    });
+    
+    FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+    });
+    };
+
+    (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+    
+    function testAPI() {
+    console.log('Welcome!  Fetching your information.... ');
+    FB.api('/me', function(response) {
+    console.log('Successful login for: ' + response.name);
+    document.getElementById('status').innerHTML =
+    'Thanks for logging in, ' + response.name + '! Your account is now linked to Stuyvesant Lost and Found.';
+    });
+    }
+  </script>
+
+
+{% endblock body %}

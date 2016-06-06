@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block body %}
+<center><h1>Things that have been LOST:</h1></center>
+{% for post in lostPosts %}
+<div class="pure-u-1 pure-u-lg-1-2 pure-u-xl-1-3">
+  <section class="post">
+    <div>
+      <img src="http://www.lcfc.com/images/common/bg_player_profile_default_big.png" class="profile"></img>
+      <span>name</span>
+    </div>
+    <div>
+      <p>
+	{{post.content}}
+      </p>
+    </div>
+    <div class="tag">
+      <p>#lost, {{post.tagsChosen}}</p>
+    </div>
+  </section>
+</div>
+{% endfor %}
+{% endblock body %}
