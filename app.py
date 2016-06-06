@@ -13,7 +13,8 @@ def home():
         print newPost
         userID = 1234
         pic = "link"
-        return utils.writePost(userID, newPost, pic)
+        utils.writePost(userID, newPost, pic)
+        return redirect(url_for("lost"))
 
 @app.route('/about', methods = ['GET','POST'])
 def about():

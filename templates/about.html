@@ -124,6 +124,21 @@
     'Thanks for logging in, ' + response.name + '! Your account is now linked to Stuyvesant Lost and Found.';
     });
     }
+
+    function getUserName(){
+    FB.api(
+    "/100004325747962",
+    function (response) {
+    console.log("HERE?");
+    if (response && !response.error) {
+    console.log("HERE!");
+    console.log(response.name);
+    }
+    }
+    );
+    }
+    getUserName();
+
   </script>
 
   <fb:login-button autologoutlink="true" scope="public_profile,email" onlogin="checkLoginState();">

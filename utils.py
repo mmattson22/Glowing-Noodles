@@ -195,7 +195,8 @@ def addUser(username,password):
     conn.commit()
     return False
 
-
+'''
 if __name__ == "__main__":
     writePost(1234, 'potatoes', "picture")
     print getAllPosts()
+'''
