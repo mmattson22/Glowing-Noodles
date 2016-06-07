@@ -135,7 +135,8 @@
     
     var userName, userPicture;
     var userID = 123;
-
+    var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    
     function testAPI() {
     console.log('Welcome!  Fetching your information.... ');
     FB.api('/me', function(response) {
@@ -147,7 +148,7 @@
     'Thanks for logging in, ' + response.name + '! Your account is now linked to Stuyvesant Lost and Found.';
     });
     document.getElementById("vars").value = userID;
-    $.post("/secret", {"userIDNum":"123"}, function(data){console.log(data)});
+    $.post($SCRIPT_ROOT+"/secret", {"userIDNum":"123"}, function(data){console.log(data)});
     }
   </script>
 

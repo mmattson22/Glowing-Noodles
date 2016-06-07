@@ -13,7 +13,7 @@ def home():
         newPost = request.form['newPost']
         lostFound = request.form['LostOrFound']
         tagsChosen = request.form['tagSuggest']
-        userID = request.form['variables']
+        userID = secret()
         print userID
         if tagsChosen == "Select a tag below:":
             tagsChosen == None
@@ -46,8 +46,9 @@ def found():
 
 @app.route('/secret',methods=['POST'])
 def secret():
-    userID = request.form.get("userIDNum")
-    print userID
+    print request.form
+    userID = request.form["userIDNum"]
+    return userID
     '''
     f = request.form
     for key in f.keys():
