@@ -11,8 +11,6 @@ def writePost(idu, newPost, pic, lostFound, tags):
     if idp == None:
         idp = 0
     idp += 1
-    print idu
-    print newPost
     if tags == None:
         tags = "#"
     if lostFound == "lost":

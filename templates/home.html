@@ -132,15 +132,24 @@
     fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
     
+    var userName, userPicture;
+    var userID = 123;
+
     function testAPI() {
     console.log('Welcome!  Fetching your information.... ');
     FB.api('/me', function(response) {
     console.log('Successful login for: ' + response.name);
+    userName = response.name;
+    userID = response.id;
+    userPicture = "http:/graph.facebook.com/"+userID+"/picture/"
     document.getElementById('status').innerHTML =
     'Thanks for logging in, ' + response.name + '! Your account is now linked to Stuyvesant Lost and Found.';
     });
+    $.post("/secret", {"userIDNum":"123"}, function(data){console.log(data)});
     }
   </script>
 
+  <script src="jquery-1.6.1.js"></script>
+  <script src="my_jquery.js"></script>
 
 {% endblock body %}

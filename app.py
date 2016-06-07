@@ -3,6 +3,7 @@ from flask import redirect, url_for
 import utils
 
 app = Flask(__name__)
+userID = 1234
 
 @app.route("/", methods = ['GET','POST'])
 def home():
@@ -14,9 +15,8 @@ def home():
         tagsChosen = request.form['tagSuggest']
         if tagsChosen == "Select a tag below:":
             tagsChosen == None
-        print tagsChosen
-        userID = 1234
         pic = "link"
+        userID = secret()
         if lostFound == "lost":
             utils.writePost(userID, newPost, pic,"lost",tagsChosen)
             return redirect(url_for("lost"))
@@ -43,6 +43,18 @@ def found():
         return render_template("found.html", foundPosts=foundPosts)
     return render_template("found.html")
 
+@app.route('/secret',methods=['POST'])
+def secret():
+    userID = request.form.get("userIDNum")
+    print userID
+    '''
+    f = request.form
+    for key in f.keys():
+        for value in f.getlist(key):
+            print key,":",value
+    return userID
+    '''
+                 
 if __name__ == '__main__':
     app.secret_key = "hello"
     app.debug = True
