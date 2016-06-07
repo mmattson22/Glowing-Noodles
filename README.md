@@ -17,3 +17,4 @@ Project: Stuy Lost and Found
       - Press Ctrl-A
       - Press Ctrl-D
 
+*Note: In order for the facebook authentication to work, the new url for the project has to be added to Michael's facebook developers page --> Contact Michael.
