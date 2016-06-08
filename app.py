@@ -3,7 +3,6 @@ from flask import redirect, url_for
 import utils
 
 app = Flask(__name__)
-userID = 1234
 
 @app.route("/", methods = ['GET','POST'])
 def home():
