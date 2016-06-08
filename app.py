@@ -47,7 +47,7 @@ def found():
 @app.route('/secret',methods=['POST'])
 def secret():
     print request.form
-    userID = request.form["userIDNum"]
+    userID = request.form["variables"]
     return userID
     '''
     f = request.form

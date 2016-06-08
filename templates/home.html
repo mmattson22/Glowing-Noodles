@@ -31,7 +31,7 @@
 		<option value="#Other">#Other</option>
 	      </select><br>
 	      <input type="hidden" name="variables" id = "vars" value="" />
-	      <button class="pure-button" style="font-size:70%;">Post</button>
+	      <button class="pure-button" onclick="testAPI()" style="font-size:70%;">Post</button>
 	    </fieldset>
 	  </form>
 	</div>
@@ -141,18 +141,18 @@
     console.log('Welcome!  Fetching your information.... ');
     FB.api('/me', function(response) {
     console.log('Successful login for: ' + response.name);
-    userName = response.name;
-    userID = response.id;
+    window.userName = response.name;
+    //to change to id later --> testing temp
+    window.userID = response.name;
     userPicture = "http:/graph.facebook.com/"+userID+"/picture/"
     document.getElementById('status').innerHTML =
     'Thanks for logging in, ' + response.name + '! Your account is now linked to Stuyvesant Lost and Found.';
     });
-    document.getElementById("vars").value = userID;
-    $.post($SCRIPT_ROOT+"/secret", {"userIDNum":"123"}, function(data){console.log(data)});
+    document.getElementById("vars").value = window.userID;
+    //$.post($SCRIPT_ROOT+"/secret", {"userIDNum":userID}, function(data){console.log(data)});
     }
   </script>
 
-  <script src="jquery-1.6.1.js"></script>
-  <script src="my_jquery.js"></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 
 {% endblock body %}
