@@ -146,7 +146,7 @@
     console.log('Successful login for: ' + response.name);
     window.userName = response.name;
     window.userID = response.name;
-    window.userPicture = "http:/graph.facebook.com/"+userID+"/picture/"
+    window.userPicture = "http:/graph.facebook.com/"+window.userID+"/picture/";
     document.getElementById('status').innerHTML =
     'Thanks for logging in, ' + response.name + '! Your account is now linked to Stuyvesant Lost and Found.';
     });
