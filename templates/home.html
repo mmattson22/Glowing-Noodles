@@ -31,7 +31,7 @@
 		<option value="#Other">#Other</option>
 	      </select><br>
 	      <input type="hidden" name="variables" id = "vars" value="" />
-	      <button class="pure-button" onclick="testAPI()" style="font-size:70%;">Post</button>
+	      <button class="pure-button" onclick="checkLoginState()" style="font-size:70%;">Post</button>
 	    </fieldset>
 	  </form>
 	</div>
@@ -100,6 +100,7 @@
     } else {
     // The person is not logged into Facebook, so we're not sure if
     // they are logged into this app or not.
+    document.getElementById("vars").value = "Anonymous";
     document.getElementById('status').innerHTML = 'Please log ' +
     'into Facebook.';
     }
