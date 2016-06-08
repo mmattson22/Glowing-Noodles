@@ -3,7 +3,7 @@ import json
 
 #----------------------------------Writing--------------------------------
 
-def writePost(idu, newPost, pic, lostFound, tags):
+def writePost(name,idu, newPost, pic, lostFound, tags):
     conn = sqlite3.connect('data.db')
     cur = conn.cursor()
     q = "SELECT MAX(id) FROM posts"
@@ -14,10 +14,10 @@ def writePost(idu, newPost, pic, lostFound, tags):
     if tags == None:
         tags = "#"
     if lostFound == "lost":
-        q = "INSERT INTO posts(id, uid, content, picture, tagsChosen) VALUES(?,?,?,?,?)"
+        q = "INSERT INTO posts(id, name,uid, content, picture, tagsChosen) VALUES(?,?,?,?,?,?)"
     elif lostFound == "found":
-        q = "INSERT INTO foundPosts(id, uid, content, picture, tagsChosen) VALUES(?,?,?,?,?)"
-    cur.execute(q,(idp, idu, newPost, pic, tags))
+        q = "INSERT INTO foundPosts(id, name, uid, content, picture, tagsChosen) VALUES(?,?,?,?,?,?)"
+    cur.execute(q,(idp,name, idu, newPost, pic, tags))
     conn.commit()
     return str(idp)
 
@@ -107,9 +107,9 @@ def getAllPosts(lostFound):
     cur = conn.cursor()
     #q = "SELECT posts.content,posts.id,posts.uid,users.facebookid FROM posts, users WHERE users.id = posts.uid ORDER BY posts.id DESC"
     if lostFound == "lost":
-        q = "SELECT posts.content,posts.id,posts.picture,posts.uid,posts.tagsChosen FROM posts"
+        q = "SELECT posts.content,posts.id,posts.picture,posts.uid,posts.tagsChosen,posts.name FROM posts"
     elif lostFound == "found":
-        q = "SELECT foundPosts.content,foundPosts.id,foundPosts.picture,foundPosts.uid,foundPosts.tagsChosen FROM foundPosts"
+        q = "SELECT foundPosts.content,foundPosts.id,foundPosts.picture,foundPosts.uid,foundPosts.tagsChosen, foundPosts.name FROM foundPosts"
                 
     cur.execute(q)
     all_rows = cur.fetchall()

@@ -13,15 +13,16 @@ def home():
         lostFound = request.form['LostOrFound']
         tagsChosen = request.form['tagSuggest']
         pic = request.form['picture']
-        userID = request.form['variables']
-        print userID
+        name = request.form['variables']
+        id = request.form['url']
+        print request.form
         if tagsChosen == "Select a tag below:":
             tagsChosen == None
         if lostFound == "lost":
-            utils.writePost(userID, newPost, pic,"lost",tagsChosen)
+            utils.writePost(name,id, newPost, pic,"lost",tagsChosen)
             return redirect(url_for("lost"))
         elif lostFound == "found":
-            utils.writePost(userID, newPost, pic,"found",tagsChosen)
+            utils.writePost(name,id, newPost, pic,"found",tagsChosen)
             return redirect(url_for("found"))
 
         return redirect(url_for("lost"))

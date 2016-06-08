@@ -2,12 +2,14 @@
 
 {% block body %}
 <center><h1>Things that have been LOST:</h1></center>
+<div class="pure-g">
+
 {% for post in lostPosts %}
 <div class="pure-u-1 pure-u-lg-1-2 pure-u-xl-1-3">
   <section class="post">
     <div>
-      <img src={{post.picture}} class="profile"></img>
-      <span>{{post.uid}}</span>
+      <a href="http://facebook.com/{{post.uid}}"><img src={{post.picture}} class="profile"></img></a>
+      <span>{{post.name}}</span>
     </div>
     <div>
       <p>
@@ -20,4 +22,5 @@
   </section>
 </div>
 {% endfor %}
+</div>
 {% endblock body %}
