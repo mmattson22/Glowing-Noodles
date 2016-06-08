@@ -107,9 +107,9 @@ def getAllPosts(lostFound):
     cur = conn.cursor()
     #q = "SELECT posts.content,posts.id,posts.uid,users.facebookid FROM posts, users WHERE users.id = posts.uid ORDER BY posts.id DESC"
     if lostFound == "lost":
-        q = "SELECT posts.content,posts.id,posts.uid,posts.tagsChosen FROM posts"
+        q = "SELECT posts.content,posts.id,posts.picture,posts.uid,posts.tagsChosen FROM posts"
     elif lostFound == "found":
-        q = "SELECT foundPosts.content,foundPosts.id,foundPosts.uid,foundPosts.tagsChosen FROM foundPosts"
+        q = "SELECT foundPosts.content,foundPosts.id,foundPosts.picture,foundPosts.uid,foundPosts.tagsChosen FROM foundPosts"
                 
     cur.execute(q)
     all_rows = cur.fetchall()
