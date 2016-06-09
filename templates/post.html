@@ -1,50 +1,43 @@
 {% extends "base.html" %}
-{% block login %}
-{% endblock login %}
-{% block body %} 
 
-  <div class="pure-g">
-    <div class="pure-u-0 pure-u-md-1-8"></div>
-    <div class="pure-u-1 pure-u-md-3-4">
-      <div class="pure-g post">
-	<div class="pure-u-1 pure-u-lg-1-4"></div>
-	<div class="pure-u-1 pure-u-lg-1-2">
-	  <center> If you have <u>lost</u> something, please go to the <u>Found Items</u> tab above to check if it has already been found.<br>Or click: <a href="/found">this</a><br><br>
-	    If you have <u>found</u> something, please go to the <u>Lost Items</u> tab above to check if it has already been reported missing<br>Or click: <a href="/lost">this</a><br><br>
-	    If you <u>do not</u> see a post for the item, please fill out the form below:<br><br>
-	  <form class="pure-form center" method="post">
-	    <fieldset class="pure-group">
-	      
-	      <select name="LostOrFound">
-		<option value="lost">Lost</option>
-		<option value="found">Found</option>
-	      </select><br><br>
-	      
-	      <textarea class="pure-input-1" name="newPost" placeholder="Description of Item"></textarea><br>
-	      <select multiple name="tagSuggest" style="font-size:90%; padding: 0px 140px 0px 140px;">
-		<option value="" selected="selected">Select a tag below:</option>
-		<option value="#Electronics">#Electronics</option>
-		<option value="#ID">#ID</option>
-		<option value="#Jewelry">#Jewelry</option>
-		<option value="#Metrocard">#Metrocard</option>
-		<option value="#School Supplies">#School Supplies</option>
-		<option value="#Wallet">#Wallet</option>
-		<option value="#Other">#Other</option>
-	      </select><br>
-	      <input type="hidden" name="variables" id = "vars" value="" />
-	      <input type="hidden" name="picture" id = "profilepic" value="" />
-	      <input type="hidden" name="url" id="link" value="" />
-	      <button class="pure-button" onclick="checkLoginState()" style="font-size:70%;">Post</button>
-	    </fieldset>
-	  </form>
-	</div>
-	<div class="pure-u-1 pure-u-lg-1-4"></div>
-      </div>
-      <div class="pure-g">
-      </div>
+{% block body %}
+<div class ="postSingular">
+    <div>
+      <img src={{post.picture}} class="profile"></img> <a href="http://facebook.com/{{post.uid}}">{{post.name}}</a>
     </div>
-    <div class="pure-u-0 pure-u-md-1-8"></div>
-  </div>
+    <div>
+      <p>
+	{{post.content}}
+      </p>
+    </div>
+    <div class="comments">
+      </div>
+    <div class="tag">
+      <p>#lost, {{post.tagsChosen}}</p>
+    </div>
+
+<form class="pure-form center" method="post">
+
+<textarea class="pure-input-1" name="newComment" placeholder="Leave a comment..." rows="5px" cols="120px"></textarea><br>
+<input type="hidden" name="variables" id = "vars" value="" />
+<input type="hidden" name="picture" id = "profilepic" value="" />
+<input type="hidden" name="url" id="link" value="" />
+<button class="pure-button" onclick="checkLoginState()" style="font-size:70%;">Post</button>
+</form>
+
+<br>
+<br>
+    <div>
+      <img src={{pic}} class="profile"></img> <a href="http://facebook.com/{id}}">{{name}}</a>
+    </div>
+    <div>
+      <p>
+        {{comment}}
+      </p>
+    </div>
+
+</div>
+
   <script>
     (function (window, document) {
     var menu = document.getElementById('menu'),

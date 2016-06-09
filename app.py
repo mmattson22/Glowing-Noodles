@@ -15,7 +15,8 @@ def home():
         pic = request.form['picture']
         name = request.form['variables']
         id = request.form['url']
-        print request.form
+        url = "<a href=/" + id + ">"
+        print url
         if tagsChosen == "Select a tag below:":
             tagsChosen == None
         if lostFound == "lost":
@@ -43,6 +44,21 @@ def found():
         foundPosts = utils.getAllPosts("found")
         return render_template("found.html", foundPosts=foundPosts)
     return render_template("found.html")
+
+@app.route('/post/<int:post_id>', methods = ['GET','POST'])
+def post(post_id):
+    if request.method=="GET":
+        post = utils.getAllPosts("lost")[post_id-1]
+        return render_template("post.html",post=post )
+    else:
+        post = utils.getAllPosts("lost")[post_id-1]
+        comment = request.form['newComment']
+        pic = request.form['picture']
+        name = request.form['variables']
+        id = request.form['url']
+        utils.writeComment(name,post_id,comment)
+        #comments = utils.getCommentsOnPost(post_id)
+        return render_template("post.html", post=post, comment=comment, pic = pic, name=name, id=id)
 
 @app.route('/secret',methods=['POST'])
 def secret():
