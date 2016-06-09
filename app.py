@@ -1,4 +1,4 @@
-from flask import Flask, render_template, session, request
+from flask import Flask, render_template, session, request, requests
 from flask import redirect, url_for
 import utils
 
@@ -15,7 +15,8 @@ def home():
         pic = request.form['picture']
         name = request.form['variables']
         id = request.form['url']
-        print request.form
+        url = "<a href=/" + id + ">"
+        print url
         if tagsChosen == "Select a tag below:":
             tagsChosen == None
         if lostFound == "lost":
@@ -44,6 +45,22 @@ def found():
         return render_template("found.html", foundPosts=foundPosts)
     return render_template("found.html")
 
+@app.route('/post/<int:post_id>', methods = ['GET','POST'])
+def post(post_id):
+    if request.method=="GET":
+        post = utils.getAllPosts("lost")[post_id-1]
+        print "hello"
+        return render_template("post.html",post=post )
+    else:
+        print "hey"
+        comment = request.form['newComment']
+        pic = request.form['picture']
+        name = request.form['variables']
+        id = request.form['url']
+        utils.writeComment(name,post_id,comment)
+
+        return redirect(url_for("post"), comment=comment)
+
 @app.route('/secret',methods=['POST'])
 def secret():
     print request.form
@@ -56,7 +73,7 @@ def secret():
             print key,":",value
     return userID
     '''
-                 
+
 if __name__ == '__main__':
     app.secret_key = "hello"
     app.debug = True
