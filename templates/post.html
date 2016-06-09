@@ -16,29 +16,26 @@
       <p>#lost, {{post.tagsChosen}}</p>
     </div>
 
-{% for comment in comments %}
-<div class="pure-u-1 pure-u-lg-1-2 pure-u-xl-1-3">
-  <section class="post">
+<form class="pure-form center" method="post">
+
+<textarea class="pure-input-1" name="newComment" placeholder="Leave a comment..." rows="5px" cols="120px"></textarea><br>
+<input type="hidden" name="variables" id = "vars" value="" />
+<input type="hidden" name="picture" id = "profilepic" value="" />
+<input type="hidden" name="url" id="link" value="" />
+<button class="pure-button" onclick="checkLoginState()" style="font-size:70%;">Post</button>
+</form>
+
+<br>
+<br>
     <div>
-      <img src={{post['picture']}} class="profile"></img> <a href="http://facebook.com/{{post['uid']}}">{{post['name']}}</a>
+      <img src={{pic}} class="profile"></img> <a href="http://facebook.com/{id}}">{{name}}</a>
     </div>
     <div>
       <p>
-	{{post['content']}}
+        {{comment}}
       </p>
     </div>
-    <div class="comments">
-   <a href=post/{{post['id']}}> <p> Leave a comment</p></a>
-    </div>
-    <div class="tag">
-      <p>#lost, {{post['tagsChosen']}}</p>
-    </div>
-  </section>
-</div>
-{% endfor %}
 
-<textarea class="pure-input-1" name="newComment" placeholder="Leave a comment..." rows="5px" cols="120px"></textarea><br>
-<button class="pure-button" onclick="checkLoginState()" style="font-size:70%;">Post</button>
 </div>
 
   <script>

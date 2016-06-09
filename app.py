@@ -1,4 +1,4 @@
-from flask import Flask, render_template, session, request, requests
+from flask import Flask, render_template, session, request
 from flask import redirect, url_for
 import utils
 
@@ -49,17 +49,16 @@ def found():
 def post(post_id):
     if request.method=="GET":
         post = utils.getAllPosts("lost")[post_id-1]
-        print "hello"
         return render_template("post.html",post=post )
     else:
-        print "hey"
+        post = utils.getAllPosts("lost")[post_id-1]
         comment = request.form['newComment']
         pic = request.form['picture']
         name = request.form['variables']
         id = request.form['url']
         utils.writeComment(name,post_id,comment)
-
-        return redirect(url_for("post"), comment=comment)
+        #comments = utils.getCommentsOnPost(post_id)
+        return render_template("post.html", post=post, comment=comment, pic = pic, name=name, id=id)
 
 @app.route('/secret',methods=['POST'])
 def secret():
