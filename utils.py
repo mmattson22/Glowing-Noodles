@@ -112,8 +112,7 @@ def getPost(idp,lostFound):
         q = "SELECT * FROM foundPosts WHERE foundPosts.id = ?"
     result = cur.execute(q,(int(idp),)).fetchone()
     conn.commit()
-    print result
-    return result
+    return tojson(result)
 
 def getAllPosts(lostFound):
     #schema = ('id', 'name', 'uid', 'content', 'profile', 'picture', 'time', 'tagsChosen')
@@ -161,6 +160,12 @@ def getAllUsers():
     conn.commit()
     return all_rows
     
+def tojson(listy):
+    r = []
+    for row in listy:
+        r += [dict((cur.description[i][0], value) 
+        for i, value in enumerate(row))]
+    return r
 
 #----------------------------------Log In---------------------------------
 #most of these aren't really necessary since we have facebook
