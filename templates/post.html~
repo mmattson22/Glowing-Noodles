@@ -3,11 +3,9 @@
 {% block body %}
 <div class ="postSingular">
     <div>
-      <img src={{post.profile}} class="profile"></img> <a href="http://facebook.com/{{post.uid}}">{{post.name}}</a>
-      <span>{{post.time}}</span>
+      <img src={{post.picture}} class="profile"></img> <a href="http://facebook.com/{{post.uid}}">{{post.name}}</a>
     </div>
     <div>
-      <img src={{post.picture}}></img>
       <p>
 	{{post.content}}
       </p>
@@ -18,41 +16,34 @@
       <p>#lost, {{post.tagsChosen}}</p>
     </div>
 
-
-<form class="pure-form center" method="post">
-
+{% for comment in comments %}
+<div class="pure-u-1 pure-u-lg-1-2 pure-u-xl-1-3">
+  <section class="post">
+    <div>
+      <img src={{post['picture']}} class="profile"></img> <a href="http://facebook.com/{{post['uid']}}">{{post['name']}}</a>
+    </div>
+    <div>
+      <p>
+	{{post['content']}}
+      </p>
+    </div>
+    <div class="comments">
+   <a href=post/{{post['id']}}> <p> Leave a comment</p></a>
+    </div>
+    <div class="tag">
+      <p>#lost, {{post['tagsChosen']}}</p>
+    </div>
+  </section>
+</div>
+{% endfor %}
+<form>
 <textarea class="pure-input-1" name="newComment" placeholder="Leave a comment..." rows="5px" cols="120px"></textarea><br>
 <input type="hidden" name="variables" id = "vars" value="" />
 <input type="hidden" name="picture" id = "profilepic" value="" />
 <input type="hidden" name="url" id="link" value="" />
 <button class="pure-button" onclick="checkLoginState()" style="font-size:70%;">Post</button>
 </form>
-
-<br>
-<br>
-{% for each in comments %}
-
-{% if post_id == each['uid'] %}
-    <div>
-      <img src={{each['profile']}} class="profile"></img> <a href="http://facebook.com/{id}}">{{each['pid']}}</a>
-      <span>{{post.time}}</span>
-    </div>
-    <div>
-      <p>
-        {{each['content']}}
-      </p>
-    </div>
-{% endif %}
-
-{% endfor %}
- 
-
-
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 59991f16381696aebdf120b45c4e3c886d6418be
+</div>
 
   <script>
     (function (window, document) {
@@ -118,13 +109,13 @@
     'into Facebook.';
     }
     }
-
+    
     function checkLoginState() {
     FB.getLoginStatus(function(response) {
     statusChangeCallback(response);
     });
     }
-
+    
     window.fbAsyncInit = function() {
     FB.init({
     appId      : '495797037296598',
@@ -133,7 +124,7 @@
     xfbml      : true,  // parse social plugins on this page
     version    : 'v2.5' // use graph api version 2.5
     });
-
+    
     FB.getLoginStatus(function(response) {
     statusChangeCallback(response);
     });
@@ -146,11 +137,11 @@
     js.src = "//connect.facebook.net/en_US/sdk.js";
     fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
-
+    
     var userName, userPicture;
     var userID;
     var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-
+    
     function testAPI() {
     console.log('Welcome!  Fetching your information.... ');
     FB.api('/me', function(response) {
