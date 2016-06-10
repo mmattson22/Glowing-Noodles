@@ -6,7 +6,10 @@ import json
 def writePost(name,idu, newPost, profile, pic, lostFound, tags):
     conn = sqlite3.connect('data.db')
     cur = conn.cursor()
-    q = "SELECT MAX(id) FROM posts"
+    if lostFound == 'lost':
+        q = "SELECT MAX(id) FROM posts"
+    else:
+        q = "SELECT MAX(id) FROM foundPosts"
     idp = cur.execute(q).fetchone()[0]
     if idp == None:
         idp = 0
@@ -143,7 +146,7 @@ def getAllPosts(lostFound):
         final.append(row)
     
     conn.commit()
-    return r
+    return all_rows
 
 
 
