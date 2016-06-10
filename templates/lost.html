@@ -16,7 +16,9 @@
       <span>{{post['time']}}</span>
     </div>
     <div>
+      {% if post['picture'] != '' %}
       <img src={{post['picture']}} style="max-width:500px"></img>
+      {% endif %}
       <p>
 	{{post['content']}}
       </p>

@@ -21,7 +21,7 @@ def writePost(name,idu, newPost, profile, pic, lostFound, tags):
         q = "INSERT INTO posts(id, name, uid, content, profile, picture, time, tagsChosen) VALUES(?,?,?,?,?,?,?,?)"
     elif lostFound == "found":
         q = "INSERT INTO foundPosts(id, name, uid, content, profile, picture, time, tagsChosen) VALUES(?,?,?,?,?,?,?,?)"
-    cur.execute(q,(idp,name, idu, newPost, profile, pic, tags, t))
+    cur.execute(q,(idp,name, idu, newPost, profile, pic, t, tags))
     conn.commit()
     return str(idp)
 
