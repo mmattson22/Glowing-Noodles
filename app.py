@@ -37,13 +37,13 @@ def about():
 def lost():
     if request.method=="GET":
         lostPosts = utils.getAllPosts("lost")
-        return render_template("lost.html", lostPosts=lostPosts)
+        return render_template("lost.html", lostPosts=lostPosts[::-1])
 
 @app.route('/found', methods = ['GET','POST'])
 def found():
     if request.method=="GET":
         foundPosts = utils.getAllPosts("found")
-        return render_template("found.html", foundPosts=foundPosts)
+        return render_template("found.html", foundPosts=foundPosts[::-1])
     return render_template("found.html")
 
 @app.route('/lost/<int:post_id>', methods = ['GET','POST'])

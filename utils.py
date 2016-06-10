@@ -108,9 +108,9 @@ def getPost(idp,lostFound):
     conn = sqlite3.connect('data.db')
     cur = conn.cursor()
     if lostFound == 'lost':
-        q = "SELECT * FROM posts WHERE posts.pid = %d"
+        q = "SELECT * FROM posts WHERE posts.pid = ?"
     else:
-        q = "SELECT * FROM foundPosts WHERE foundPosts.pid = %d"
+        q = "SELECT * FROM foundPosts WHERE foundPosts.pid = ?"
     result = cur.execute(q,(idp,)).fetchone()
     conn.commit()
     return result
