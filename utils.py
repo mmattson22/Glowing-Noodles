@@ -116,6 +116,7 @@ def getPost(idp,lostFound):
     return result
 
 def getAllPosts(lostFound):
+    #schema = ('id', 'name', 'uid', 'content', 'profile', 'picture', 'time', 'tagsChosen')
     conn = sqlite3.connect('data.db')
     cur = conn.cursor()
     if lostFound == "lost":
@@ -146,7 +147,7 @@ def getAllPosts(lostFound):
         final.append(row)
     
     conn.commit()
-    return all_rows
+    return r
 
 
 
