@@ -34,10 +34,8 @@
 <br>
 <br>
 {% for each in comments %}
-
-{% if post_id == each['uid'] %}
     <div>
-      <img src={{each['profile']}} class="profile"></img> <a href="http://facebook.com/{id}}">{{each['pid']}}</a>
+      <img src={{each['profile']}} class="profile"></img> <a href="http://facebook.com/{id}}">{{each}}</a>
       <span>{{each.time}}</span>
     </div>
     <div>
@@ -48,7 +46,6 @@
         {{each['content']}}
       </p>
     </div>
-{% endif %}
 
 {% endfor %}
  
