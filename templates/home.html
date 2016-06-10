@@ -13,15 +13,15 @@
 	    If you have <u>found</u> something, please go to the <u>Lost Items</u> tab above to check if it has already been reported missing<br>Or click: <a href="/lost">this</a><br><br>
 	    If you <u>do not</u> see a post for the item, please fill out the form below:<br><br>
 	  <form class="pure-form center" method="post">
-	    <fieldset class="pure-group">
 	      
 	      <select name="LostOrFound">
 		<option value="lost">Lost</option>
 		<option value="found">Found</option>
 	      </select><br><br>
-	      
-	      <textarea class="pure-input-1" name="newPost" placeholder="Description of Item"></textarea><br>
-	      <select multiple name="tagSuggest" style="font-size:90%; padding: 0px 140px 0px 140px;">
+	      <div class="pure-g" id="photos"></div>
+	      <input name="picture" id="pic" placeholder="URL of a picture (optional)" value="">
+	      <textarea class="pure-input-1" style="width:100%" name="newPost" placeholder="Description of Item"></textarea><br>
+	      <select multiple name="tagSuggest" style="with:100%; font-size:90%; padding: 0px 140px 0px 140px;">
 		<option value="" selected="selected">Select a tag below:</option>
 		<option value="#Electronics">#Electronics</option>
 		<option value="#ID">#ID</option>
@@ -32,10 +32,9 @@
 		<option value="#Other">#Other</option>
 	      </select><br>
 	      <input type="hidden" name="variables" id = "vars" value="" />
-	      <input type="hidden" name="picture" id = "profilepic" value="" />
+	      <input type="hidden" name="profile" id = "profilepic" value="" />
 	      <input type="hidden" name="url" id="link" value="" />
 	      <button class="pure-button" onclick="checkLoginState()" style="font-size:70%;">Post</button>
-	    </fieldset>
 	  </form>
 	</div>
 	<div class="pure-u-1 pure-u-lg-1-4"></div>
@@ -153,6 +152,7 @@
     document.getElementById('status').innerHTML =
     'Thanks for logging in, ' + response.name + '! Your account is now linked to Stuyvesant Lost and Found.';
     });
+    $.ajax({url:document.getElementById("pic").value,type:'HEAD',error:function(){document.getElementById("pic").value=""}});
     document.getElementById("vars").value = window.userID;
     document.getElementById("profilepic").value = window.userPicture;
     document.getElementById("link").value = window.userRealID;

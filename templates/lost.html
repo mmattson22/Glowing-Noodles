@@ -12,15 +12,17 @@
 <div class="pure-u-1 pure-u-lg-1-2 pure-u-xl-1-3">
   <section class="post">
     <div>
-      <img src={{post['picture']}} class="profile"></img> <a href="http://facebook.com/{{post['uid']}}">{{post['name']}}</a>
+      <img src={{post['profile']}} class="profile"></img> <a href="http://facebook.com/{{post['uid']}}">{{post['name']}}</a>
+      <span>{{post['time']}}</span>
     </div>
     <div>
+      <img src={{post['picture']}} style="max-width:500px"></img>
       <p>
 	{{post['content']}}
       </p>
     </div>
     <div class="comments">
-   <a href=post/{{post['id']}}> <p> Leave a comment</p></a>
+   <a href=lost/{{post['id']}}> <p> Leave a comment</p></a>
     </div>
     <div class="tag">
       <p>#lost, {{post['tagsChosen']}}</p>

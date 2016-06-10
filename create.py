@@ -16,17 +16,14 @@ c.execute(q)
 q = "create table users(id integer, facebookid text)"
 c.execute(q)
 
-q = "create table posts(id integer, name text, uid integer, content text, picture text, tagsChosen text)"
+q = "create table posts(id integer, name text, uid integer, content text, profile text, picture text, time text, tagsChosen text)"
 c.execute(q)
 
-q = "create table foundPosts(id integer, name text, uid integer, content text, picture text, tagsChosen text)"
+q = "create table foundPosts(id integer, name text, uid integer, content text, profile text, picture text, time text, tagsChosen text)"
 c.execute(q)
 
-q = "create table comments(id integer, pid integer, uid integer, content text)"
+q = "create table comments(id integer, pid integer, uid integer, content text, profile text, picture text, time text, lostFound text)"
 c.execute(q)
-
-#q = "create table relations(uid integer, pid integer, cid integer)"
-#c.execute(q)
 
 conn.commit()
 
