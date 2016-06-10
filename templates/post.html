@@ -1,5 +1,6 @@
 {% extends "base.html" %}
-
+{% block login %}
+{% endblock login %}
 {% block body %}
 <div class ="postSingular">
     <div>
@@ -22,7 +23,7 @@
 
 
 <form class="pure-form center" method="post">
-
+<input name="picture" id="pic" placeholder="Picture (optional)" />
 <textarea class="pure-input-1" name="newComment" placeholder="Leave a comment..." rows="5px" cols="120px"></textarea><br>
 <input type="hidden" name="variables" id = "vars" value="" />
 <input type="hidden" name="picture" id = "profilepic" value="" />
@@ -37,9 +38,12 @@
 {% if post_id == each['uid'] %}
     <div>
       <img src={{each['profile']}} class="profile"></img> <a href="http://facebook.com/{id}}">{{each['pid']}}</a>
-      <span>{{post.time}}</span>
+      <span>{{each.time}}</span>
     </div>
     <div>
+      {% if each.picture != '' %}
+      <img src={{each.picture}} class="pic"></img>
+      {% endif %}
       <p>
         {{each['content']}}
       </p>
@@ -157,6 +161,7 @@
     document.getElementById('status').innerHTML =
     'Thanks for logging in, ' + response.name + '! Your account is now linked to Stuyvesant Lost and Found.';
     });
+    $.ajax({url:document.getElementById("pic").value,type:'HEAD',error:function(){document.getElementById("pic").value=""}});
     document.getElementById("vars").value = window.userID;
     document.getElementById("profilepic").value = window.userPicture;
     document.getElementById("link").value = window.userRealID;
