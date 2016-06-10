@@ -104,6 +104,7 @@ def getUserPosts(idu):
     return result
 
 def getPost(idp,lostFound):
+    schema = ('id', 'name', 'uid', 'content', 'profile', 'picture', 'time', 'tagsChosen')
     conn = sqlite3.connect('data.db')
     cur = conn.cursor()
     if lostFound == 'lost':
@@ -112,7 +113,10 @@ def getPost(idp,lostFound):
         q = "SELECT * FROM foundPosts WHERE foundPosts.id = ?"
     result = cur.execute(q,(int(idp),)).fetchone()
     conn.commit()
-    return tojson(result)
+    a = {}
+    for i,v in enumerate(result):
+        a[schema[i]] = v
+    return a
 
 def getAllPosts(lostFound):
     #schema = ('id', 'name', 'uid', 'content', 'profile', 'picture', 'time', 'tagsChosen')
