@@ -141,8 +141,8 @@ def getAllPosts(lostFound):
         r += [dict((cur.description[i][0], value) \
               for i, value in enumerate(row))]
 
-    with open('params.json', 'w') as f:
-        json.dump(r, f)
+    #with open('params.json', 'w') as f:
+    #    json.dump(r, f)
 
     '''
     with open('params.json', 'r') as f:
