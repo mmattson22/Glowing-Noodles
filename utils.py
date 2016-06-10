@@ -86,7 +86,6 @@ def getCommentsOnPost(idp):
     for row in all_rows:
         r += [dict((cur.description[i][0], value) 
         for i, value in enumerate(row))]
-    print 'comments are '+r
     return r
 
 def getComment(cid):
@@ -111,9 +110,9 @@ def getPost(idp,lostFound):
         q = "SELECT * FROM posts WHERE posts.id = ?"
     else:
         q = "SELECT * FROM foundPosts WHERE foundPosts.id = ?"
-    result = cur.execute(q,(idp,)).fetchone()
+    result = cur.execute(q,(int(idp),)).fetchone()
     conn.commit()
-    print 'post is '+result
+    print result
     return result
 
 def getAllPosts(lostFound):

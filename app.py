@@ -50,9 +50,10 @@ def found():
 @app.route('/lost/<int:post_id>', methods = ['GET','POST'])
 def post(post_id):
     if request.method=="GET":
-        post = utils.getPost(int(post_id),"lost")
-        comments = utils.getCommentsOnPost(int(post_id))
-
+        post = utils.getPost(post_id,"lost")
+        comments = utils.getCommentsOnPost(post_id)
+        print 're'
+        print post,comments
         return render_template("post.html",post=post, comments = comments)
     else:
         post = utils.getPost(post_id,"lost")
@@ -70,7 +71,8 @@ def foundPost(post_id):
     if request.method=="GET":
         post = utils.getPost(post_id,"found")
         comments = utils.getCommentsOnPost(post_id)
-
+        print 're'
+        print post,comments
         return render_template("post.html",post=post,comments=comments)
     else:
         post = utils.getPost(post_id,"found")
