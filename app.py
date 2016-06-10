@@ -49,7 +49,9 @@ def found():
 def post(post_id):
     if request.method=="GET":
         post = utils.getAllPosts("lost")[post_id-1]
-        return render_template("post.html",post=post )
+        comments = utils.getCommentsOnPost(post_id)
+
+        return render_template("post.html",post=post)
     else:
         post = utils.getAllPosts("lost")[post_id-1]
         comment = request.form['newComment']
@@ -57,8 +59,8 @@ def post(post_id):
         name = request.form['variables']
         id = request.form['url']
         utils.writeComment(name,post_id,comment)
-        #comments = utils.getCommentsOnPost(post_id)
-        return render_template("post.html", post=post, comment=comment, pic = pic, name=name, id=id)
+        comments = utils.getCommentsOnPost(post_id)
+        return render_template("post.html", post=post, comment=comment, pic = pic, name=name, id=id, post_id=post_id, comments=comments)
 
 @app.route('/secret',methods=['POST'])
 def secret():

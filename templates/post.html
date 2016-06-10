@@ -16,6 +16,7 @@
       <p>#lost, {{post.tagsChosen}}</p>
     </div>
 
+
 <form class="pure-form center" method="post">
 
 <textarea class="pure-input-1" name="newComment" placeholder="Leave a comment..." rows="5px" cols="120px"></textarea><br>
@@ -27,16 +28,23 @@
 
 <br>
 <br>
+{% for each in comments %}
+
+{% if post_id == each['uid'] %}
     <div>
-      <img src={{pic}} class="profile"></img> <a href="http://facebook.com/{id}}">{{name}}</a>
+      <img src={{pic}} class="profile"></img> <a href="http://facebook.com/{id}}">{{each['pid']}}</a>
     </div>
     <div>
       <p>
-        {{comment}}
+        {{each['content']}}
       </p>
     </div>
+{% endif %}
 
-</div>
+{% endfor %}
+
+
+
 
   <script>
     (function (window, document) {
