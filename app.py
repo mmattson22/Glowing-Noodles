@@ -12,6 +12,7 @@ def home():
         newPost = request.form['newPost']
         lostFound = request.form['LostOrFound']
         tagsChosen = request.form['tagSuggest']
+        prof = request.form['profile']
         pic = request.form['picture']
         name = request.form['variables']
         id = request.form['url']
@@ -20,10 +21,10 @@ def home():
         if tagsChosen == "Select a tag below:":
             tagsChosen == None
         if lostFound == "lost":
-            utils.writePost(name,id, newPost, pic,"lost",tagsChosen)
+            utils.writePost(name,id, newPost, prof, pic,"lost",tagsChosen)
             return redirect(url_for("lost"))
         elif lostFound == "found":
-            utils.writePost(name,id, newPost, pic,"found",tagsChosen)
+            utils.writePost(name,id, newPost, prof, pic,"found",tagsChosen)
             return redirect(url_for("found"))
 
         return redirect(url_for("lost"))
@@ -45,23 +46,42 @@ def found():
         return render_template("found.html", foundPosts=foundPosts)
     return render_template("found.html")
 
-@app.route('/post/<int:post_id>', methods = ['GET','POST'])
+@app.route('/lost/<int:post_id>', methods = ['GET','POST'])
 def post(post_id):
     if request.method=="GET":
-        post = utils.getAllPosts("lost")[post_id-1]
+        post = utils.getPost(post_id,"lost")
         comments = utils.getCommentsOnPost(post_id)
 
-        return render_template("post.html",post=post)
+        return render_template("post.html",post=post, comments = comments)
     else:
-        post = utils.getAllPosts("lost")[post_id-1]
+        post = utils.getPost(post_id,"lost")
         comment = request.form['newComment']
+        prof = request.form['profile']
         pic = request.form['picture']
         name = request.form['variables']
         id = request.form['url']
         utils.writeComment(name,post_id,comment)
-        comments = utils.getCommentsOnPost(post_id)
-        return render_template("post.html", post=post, comment=comment, pic = pic, name=name, id=id, post_id=post_id, comments=comments)
+        comments = utils.getCommentsOnPost(post_id,name,id,comment,prof,pic,'lost')
+        return render_template("post.html", post=post, comments=comments)
 
+@app.route('/found/<int:post_id>', methods = ['GET','POST'])
+def foundPost(post_id):
+    if request.method=="GET":
+        post = utils.getPost(post_id,"found")
+        comments = utils.getCommentsOnPost(post_id)
+
+        return render_template("post.html",post=post,comments=comments)
+    else:
+        post = utils.getPost(post_id,"found")
+        comment = request.form['newComment']
+        prof = request.form['profile']
+        pic = request.form['picture']
+        name = request.form['variables']
+        id = request.form['url']
+        utils.writeComment(post_id,name,id,comment,prof,pic,'found')
+        comments = utils.getCommentsOnPost(post_id,'found')
+        return render_template("post.html", post=post, comments=comments)
+    
 @app.route('/secret',methods=['POST'])
 def secret():
     print request.form

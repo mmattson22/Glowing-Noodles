@@ -3,7 +3,7 @@ import json
 
 #----------------------------------Writing--------------------------------
 
-def writePost(name,idu, newPost, pic, lostFound, tags):
+def writePost(name,idu, newPost, profile, pic, lostFound, tags):
     conn = sqlite3.connect('data.db')
     cur = conn.cursor()
     q = "SELECT MAX(id) FROM posts"
@@ -11,17 +11,18 @@ def writePost(name,idu, newPost, pic, lostFound, tags):
     if idp == None:
         idp = 0
     idp += 1
+    t = time.strftime('%l:%M%p, %b %d %Y')
     if tags == None:
         tags = "#"
     if lostFound == "lost":
-        q = "INSERT INTO posts(id, name,uid, content, picture, tagsChosen) VALUES(?,?,?,?,?,?)"
+        q = "INSERT INTO posts(id, name, uid, content, profile, picture, time, tagsChosen) VALUES(?,?,?,?,?,?,?,?)"
     elif lostFound == "found":
-        q = "INSERT INTO foundPosts(id, name, uid, content, picture, tagsChosen) VALUES(?,?,?,?,?,?)"
-    cur.execute(q,(idp,name, idu, newPost, pic, tags))
+        q = "INSERT INTO foundPosts(id, name, uid, content, profile, picture, time, tagsChosen) VALUES(?,?,?,?,?,?,?,?)"
+    cur.execute(q,(idp,name, idu, newPost, profile, pic, tags, t))
     conn.commit()
     return str(idp)
 
-def writeComment(idp,idu,txt):
+def writeComment(idp,name,idu,txt,profile,picture,lostFound):
     conn = sqlite3.connect('data.db')
     cur = conn.cursor()
     q = "SELECT MAX(id) FROM comments"
@@ -29,8 +30,9 @@ def writeComment(idp,idu,txt):
     if idc == None:
         idc = 0
     print idc+1
-    q = "INSERT INTO comments(id,pid,uid,content) VALUES(?,?,?,?)"
-    cur.execute(q,(idc+1,idp,idu,txt))
+    t = time.strftime('%l:%M%p, %b %d %Y')
+    q = "INSERT INTO comments(id,pid,uid,content,profile,picture,time,lostFound) VALUES(?,?,?,?,?,?,?,?)"
+    cur.execute(q,(idc+1,idp,idu,txt,profile,picture,t,lostFound))
     conn.commit()
     
 #----------------------------------Deleting-------------------------------
@@ -74,8 +76,8 @@ def deletePost(idp):
 def getCommentsOnPost(idp):
     conn = sqlite3.connect('data.db')
     cur = conn.cursor()
-    q = "SELECT comments.content, comments.pid, comments.uid FROM comments" 
-    cur.execute(q)
+    q = "SELECT * FROM comments WHERE comments.pid = ?" 
+    cur.execute(q(idp,))
     all_rows = cur.fetchall()
     r = []
     for row in all_rows:
@@ -87,7 +89,7 @@ def getCommentsOnPost(idp):
 def getComment(cid):
     conn = sqlite3.connect('data.db')
     cur = conn.cursor()
-    q = "SELECT comments.*,users.name FROM comments, users WHERE comments.cid = %d AND users.id = comments.uid"
+    q = "SELECT comments.* FROM comments, users WHERE comments.cid = %d AND users.id = comments.uid"
     result = cur.execute(q%cid).fetchone()
     return result
 
@@ -99,22 +101,24 @@ def getUserPosts(idu):
     conn.commit()
     return result
 
-def getPost(idp):
+def getPost(idp,lostFound):
     conn = sqlite3.connect('data.db')
     cur = conn.cursor()
-    q = "SELECT posts.*,users.name,users.filename FROM posts,users WHERE posts.pid = %d AND posts.uid = users.id"
-    result = cur.execute(q%idp).fetchone()
+    if lostFound == 'lost':
+        q = "SELECT * FROM posts WHERE posts.pid = %d"
+    else:
+        q = "SELECT * FROM foundPosts WHERE foundPosts.pid = %d"
+    result = cur.execute(q,(idp,)).fetchone()
     conn.commit()
     return result
 
 def getAllPosts(lostFound):
     conn = sqlite3.connect('data.db')
     cur = conn.cursor()
-    #q = "SELECT posts.content,posts.id,posts.uid,users.facebookid FROM posts, users WHERE users.id = posts.uid ORDER BY posts.id DESC"
     if lostFound == "lost":
-        q = "SELECT posts.content,posts.id,posts.picture,posts.uid,posts.tagsChosen,posts.name FROM posts"
+        q = "SELECT * FROM posts"
     elif lostFound == "found":
-        q = "SELECT foundPosts.content,foundPosts.id,foundPosts.picture,foundPosts.uid,foundPosts.tagsChosen, foundPosts.name FROM foundPosts"
+        q = "SELECT * FROM foundPosts"
                 
     cur.execute(q)
     all_rows = cur.fetchall()

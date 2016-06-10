@@ -3,9 +3,11 @@
 {% block body %}
 <div class ="postSingular">
     <div>
-      <img src={{post.picture}} class="profile"></img> <a href="http://facebook.com/{{post.uid}}">{{post.name}}</a>
+      <img src={{post.profile}} class="profile"></img> <a href="http://facebook.com/{{post.uid}}">{{post.name}}</a>
+      <span>{{post.time}}</span>
     </div>
     <div>
+      <img src={{post.picture}}></img>
       <p>
 	{{post.content}}
       </p>
@@ -32,7 +34,8 @@
 
 {% if post_id == each['uid'] %}
     <div>
-      <img src={{pic}} class="profile"></img> <a href="http://facebook.com/{id}}">{{each['pid']}}</a>
+      <img src={{each['profile']}} class="profile"></img> <a href="http://facebook.com/{id}}">{{each['pid']}}</a>
+      <span>{{post.time}}</span>
     </div>
     <div>
       <p>
