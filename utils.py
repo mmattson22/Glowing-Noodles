@@ -80,13 +80,13 @@ def getCommentsOnPost(idp):
     conn = sqlite3.connect('data.db')
     cur = conn.cursor()
     q = "SELECT * FROM comments WHERE comments.pid = ?" 
-    cur.execute(q(idp,))
+    cur.execute(q,(idp,))
     all_rows = cur.fetchall()
     r = []
     for row in all_rows:
         r += [dict((cur.description[i][0], value) 
         for i, value in enumerate(row))]
-    print r
+    print 'comments are '+r
     return r
 
 def getComment(cid):
@@ -113,6 +113,7 @@ def getPost(idp,lostFound):
         q = "SELECT * FROM foundPosts WHERE foundPosts.id = ?"
     result = cur.execute(q,(idp,)).fetchone()
     conn.commit()
+    print 'post is '+result
     return result
 
 def getAllPosts(lostFound):
