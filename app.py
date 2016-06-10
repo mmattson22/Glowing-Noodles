@@ -62,8 +62,8 @@ def post(post_id):
         pic = request.form['picture']
         name = request.form['variables']
         id = request.form['url']
-        utils.writeComment(name,post_id,comment)
-        comments = utils.getCommentsOnPost(post_id,name,id,comment,prof,pic,'lost')
+        utils.writeComment(post_id,name,id,comment,prof,pic,'post')
+        comments = utils.getCommentsOnPost(post_id,'lost')
         return render_template("post.html", post=post, comments=comments)
 
 @app.route('/found/<int:post_id>', methods = ['GET','POST'])

@@ -76,10 +76,13 @@ def deletePost(idp):
 
 #----------------------------------Getting--------------------------------
 
-def getCommentsOnPost(idp):
+def getCommentsOnPost(idp, lostFound):
     conn = sqlite3.connect('data.db')
     cur = conn.cursor()
-    q = "SELECT * FROM comments WHERE comments.pid = ?" 
+    if lostFound == 'lost':
+        q = "SELECT * FROM comments WHERE comments.pid = ?"
+    else:
+        q = "SELECT * FROM comments WHERE comments.pid = ?"
     cur.execute(q,(idp,))
     all_rows = cur.fetchall()
     r = []
