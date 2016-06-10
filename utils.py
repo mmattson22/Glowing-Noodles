@@ -24,12 +24,12 @@ def writePost(name,idu, newPost, pic, lostFound, tags):
 def writeComment(idp,idu,txt):
     conn = sqlite3.connect('data.db')
     cur = conn.cursor()
-    q = "SELECT MAX(cid) FROM comments"
+    q = "SELECT MAX(id) FROM comments"
     idc = cur.execute(q).fetchone()[0]
     if idc == None:
         idc = 0
     print idc+1
-    q = "INSERT INTO comments(id,pid,uid,context) VALUES(?,?,?,?)"
+    q = "INSERT INTO comments(id,pid,uid,content) VALUES(?,?,?,?)"
     cur.execute(q,(idc+1,idp,idu,txt))
     conn.commit()
     
@@ -74,10 +74,15 @@ def deletePost(idp):
 def getCommentsOnPost(idp):
     conn = sqlite3.connect('data.db')
     cur = conn.cursor()
-    q = "SELECT comments.content,datetime(comments.time,'localtime'),users.name,comments.cid,users.filename FROM comments, users WHERE comments.pid = %d AND users.id = comments.uid"
-    result = cur.execute(q%idp).fetchall()
-    conn.commit()
-    return result
+    q = "SELECT comments.content, comments.pid, comments.uid FROM comments" 
+    cur.execute(q)
+    all_rows = cur.fetchall()
+    r = []
+    for row in all_rows:
+        r += [dict((cur.description[i][0], value) 
+        for i, value in enumerate(row))]
+    print r
+    return r
 
 def getComment(cid):
     conn = sqlite3.connect('data.db')
