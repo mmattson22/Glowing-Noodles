@@ -66,15 +66,15 @@
 	  -ms-transition: height 0.5s;
 	  transition: height 0.5s;
 	  }
-	  
+
 	  .custom-wrapper.open {
 	  height: 24em;
 	  }
-	  
+
 	  .custom-menu-3 {
 	  text-align: right;
 	  }
-	  
+
 	  .custom-toggle {
 	  width: 34px;
 	  height: 34px;
@@ -84,7 +84,7 @@
 	  right: 0;
 	  display: none;
 	  }
-	  
+
 	  .custom-toggle .bar {
 	  background-color: #777;
 	  display: block;
@@ -122,7 +122,7 @@
 	  font-size: 20px;
 	  color: #3D3C3A;
 	  }
-	  
+
 	  @media (max-width: 63.999em) {
 	  .custom-menu-3 {
           text-align: left;
@@ -130,7 +130,7 @@
 	  .custom-toggle {
           display: block;
 	  }
-	  
+
 	  }
 	</style>
 </head>
@@ -180,7 +180,7 @@ checkLoginState();">
       </div>
     </div>
   </div>
-{% endblock navlinks %} 	
+{% endblock navlinks %}
 
 {% block login %}
   <script>
@@ -245,13 +245,13 @@ checkLoginState();">
     'into Facebook.';
     }
     }
-    
+
     function checkLoginState() {
     FB.getLoginStatus(function(response) {
     statusChangeCallback(response);
     });
     }
-    
+
     window.fbAsyncInit = function() {
     FB.init({
     appId      : '495797037296598',
@@ -260,7 +260,7 @@ checkLoginState();">
     xfbml      : true,  // parse social plugins on this page
     version    : 'v2.5' // use graph api version 2.5
     });
-    
+
     FB.getLoginStatus(function(response) {
     statusChangeCallback(response);
     });
@@ -273,7 +273,7 @@ checkLoginState();">
     js.src = "//connect.facebook.net/en_US/sdk.js";
     fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
-    
+
     function testAPI() {
     console.log('Welcome!  Fetching your information.... ');
     FB.api('/me', function(response) {
@@ -286,7 +286,7 @@ checkLoginState();">
   </script>
 {% endblock login %}
 
-{% block body %} 
+{% block body %}
 
 {% endblock body %}
 </body>

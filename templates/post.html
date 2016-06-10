@@ -16,6 +16,7 @@
       <p>#lost, {{post.tagsChosen}}</p>
     </div>
 
+
 <form class="pure-form center" method="post">
 
 <textarea class="pure-input-1" name="newComment" placeholder="Leave a comment..." rows="5px" cols="120px"></textarea><br>
@@ -27,16 +28,23 @@
 
 <br>
 <br>
+{% for each in comments %}
+
+{% if post_id == each['uid'] %}
     <div>
-      <img src={{pic}} class="profile"></img> <a href="http://facebook.com/{id}}">{{name}}</a>
+      <img src={{pic}} class="profile"></img> <a href="http://facebook.com/{id}}">{{each['pid']}}</a>
     </div>
     <div>
       <p>
-        {{comment}}
+        {{each['content']}}
       </p>
     </div>
+{% endif %}
 
-</div>
+{% endfor %}
+ 
+
+
 
   <script>
     (function (window, document) {
@@ -102,13 +110,13 @@
     'into Facebook.';
     }
     }
-    
+
     function checkLoginState() {
     FB.getLoginStatus(function(response) {
     statusChangeCallback(response);
     });
     }
-    
+
     window.fbAsyncInit = function() {
     FB.init({
     appId      : '495797037296598',
@@ -117,7 +125,7 @@
     xfbml      : true,  // parse social plugins on this page
     version    : 'v2.5' // use graph api version 2.5
     });
-    
+
     FB.getLoginStatus(function(response) {
     statusChangeCallback(response);
     });
@@ -130,11 +138,11 @@
     js.src = "//connect.facebook.net/en_US/sdk.js";
     fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
-    
+
     var userName, userPicture;
     var userID;
     var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-    
+
     function testAPI() {
     console.log('Welcome!  Fetching your information.... ');
     FB.api('/me', function(response) {
