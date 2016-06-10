@@ -1,6 +1,6 @@
 from flask import Flask, render_template, session, request
 from flask import redirect, url_for
-import utils
+import utils, os
 
 app = Flask(__name__)
 
@@ -99,10 +99,10 @@ def secret():
     '''
 
 if __name__ == '__main__':
-    app.secret_key = "hello"
     app.debug = True
     app.threaded = True
     app.run(host='0.0.0.0', port=8000)
 else:
-    app.secret_key = "hello"
+    utils.path = os.path.dirname(os.path.abspath(__file__))+'/data.db'
+    print utils.path
     app.debug = True

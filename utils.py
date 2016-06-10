@@ -1,10 +1,12 @@
 import sqlite3,hashlib, time, datetime
-import json
+import json, os
+
+path = 'data.db'
 
 #----------------------------------Writing--------------------------------
 
 def writePost(name,idu, newPost, profile, pic, lostFound, tags):
-    conn = sqlite3.connect('data.db')
+    conn = sqlite3.connect(path)
     cur = conn.cursor()
     if lostFound == 'lost':
         q = "SELECT MAX(id) FROM posts"
@@ -26,7 +28,7 @@ def writePost(name,idu, newPost, profile, pic, lostFound, tags):
     return str(idp)
 
 def writeComment(idp,name,idu,txt,profile,picture,lostFound):
-    conn = sqlite3.connect('data.db')
+    conn = sqlite3.connect(path)
     cur = conn.cursor()
     q = "SELECT MAX(id) FROM comments"
     idc = cur.execute(q).fetchone()[0]
@@ -40,7 +42,7 @@ def writeComment(idp,name,idu,txt,profile,picture,lostFound):
     
 #----------------------------------Deleting-------------------------------
 def deleteComment(idc):
-    conn = sqlite3.connect('data.db')
+    conn = sqlite3.connect(path)
     cur = conn.cursor()
     deleteCommentH(idc)
     q = "UPDATE comments SET cid = cid-1 WHERE cid > (?)"
@@ -48,14 +50,14 @@ def deleteComment(idc):
     conn.commit()
 
 def deleteCommentH(idc):
-    conn = sqlite3.connect('data.db')
+    conn = sqlite3.connect(path)
     cur = conn.cursor()
     q = "DELETE FROM comments WHERE comments.cid = (?)"
     cur.execute(q,(idc,))
     conn.commit()
 
 def deletePost(idp):
-    conn = sqlite3.connect('data.db')
+    conn = sqlite3.connect(path)
     cur = conn.cursor()
     q = "SELECT comments.cid FROM comments WHERE comments.pid = %d"
     bad = cur.execute(q%idp).fetchall()
@@ -77,7 +79,7 @@ def deletePost(idp):
 #----------------------------------Getting--------------------------------
 
 def getCommentsOnPost(idp, lostFound):
-    conn = sqlite3.connect('data.db')
+    conn = sqlite3.connect(path)
     cur = conn.cursor()
     if lostFound == 'lost':
         q = "SELECT * FROM comments WHERE comments.pid = ?"
@@ -92,14 +94,14 @@ def getCommentsOnPost(idp, lostFound):
     return r
 
 def getComment(cid):
-    conn = sqlite3.connect('data.db')
+    conn = sqlite3.connect(path)
     cur = conn.cursor()
     q = "SELECT comments.* FROM comments, users WHERE comments.cid = %d AND users.id = comments.uid"
     result = cur.execute(q%cid).fetchone()
     return result
 
 def getUserPosts(idu):
-    conn = sqlite3.connect('data.db')
+    conn = sqlite3.connect(path)
     cur = conn.cursor()
     q = "SELECT * FROM posts WHERE posts.uid = %d"
     result = cur.execute(q%idu).fetchall()
@@ -108,7 +110,7 @@ def getUserPosts(idu):
 
 def getPost(idp,lostFound):
     schema = ('id', 'name', 'uid', 'content', 'profile', 'picture', 'time', 'tagsChosen')
-    conn = sqlite3.connect('data.db')
+    conn = sqlite3.connect(path)
     cur = conn.cursor()
     if lostFound == 'lost':
         q = "SELECT * FROM posts WHERE posts.id = ?"
@@ -123,7 +125,7 @@ def getPost(idp,lostFound):
 
 def getAllPosts(lostFound):
     #schema = ('id', 'name', 'uid', 'content', 'profile', 'picture', 'time', 'tagsChosen')
-    conn = sqlite3.connect('data.db')
+    conn = sqlite3.connect(path)
     cur = conn.cursor()
     if lostFound == "lost":
         q = "SELECT * FROM posts"
@@ -158,7 +160,7 @@ def getAllPosts(lostFound):
 
 
 def getAllUsers():
-    conn = sqlite3.connect('data.db')
+    conn = sqlite3.connect(path)
     cur = conn.cursor()
     q = "SELECT users.name FROM users"
     cur.execute(q)
@@ -183,7 +185,7 @@ def encrypt(word):
     return hashp.hexdigest()
 
 def authenticate(username,password):
-    conn = sqlite3.connect('data.db')
+    conn = sqlite3.connect(path)
     cur = conn.cursor()
     q = 'SELECT users.password FROM users WHERE users.name = "%s"'
     result = cur.execute(q%username)
@@ -194,7 +196,7 @@ def authenticate(username,password):
     return False
 
 def getUserId(name):
-    conn = sqlite3.connect('data.db')
+    conn = sqlite3.connect(path)
     cur = conn.cursor()
     q = 'SELECT users.id FROM users WHERE users.name = "%s"'
     result = cur.execute(q%name).fetchone()
@@ -202,7 +204,7 @@ def getUserId(name):
     return result[0]
 
 def getUserName(uid):
-    conn = sqlite3.connect('data.db')
+    conn = sqlite3.connect(path)
     cur = conn.cursor()
     q = 'SELECT users.name FROM users WHERE users.id = %d'
     result = cur.execute(q%uid).fetchone()
@@ -210,7 +212,7 @@ def getUserName(uid):
     return result[0]
 
 def addUser(username,password):
-    conn = sqlite3.connect('data.db')
+    conn = sqlite3.connect(path)
     cur = conn.cursor()
     q = 'SELECT users.name FROM users WHERE users.name = ?'
     result = cur.execute(q,(username,)).fetchone()
