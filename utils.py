@@ -16,7 +16,7 @@ def writePost(name,idu, newPost, profile, pic, lostFound, tags):
     if idp == None:
         idp = 0
     idp += 1
-    t = time.strftime('%l:%M%p, %b %d %Y')
+    t = time.strftime('%I:%M%p, %b %d %Y')
     if tags == None:
         tags = "#"
     if lostFound == "lost":
@@ -33,7 +33,7 @@ def writeComment(idp,name,idu,txt,profile,picture,lostFound):
     idc = cur.execute(q).fetchone()[0]
     if idc == None:
         idc = 0
-    t = time.strftime('%l:%M%p, %b %d %Y')
+    t = time.strftime('%I:%M%p, %b %d %Y')
     q = "INSERT INTO comments(id,pid,uid,content,profile,picture,time,lostFound) VALUES(?,?,?,?,?,?,?,?)"
     cur.execute(q,(idc+1,idp,idu,txt,profile,picture,t,lostFound))
     conn.commit()
