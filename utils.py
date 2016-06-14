@@ -1,7 +1,7 @@
 import sqlite3,hashlib, time, datetime
 import json, os
 
-path = 'data.db'
+path = os.path.dirname(os.path.abspath(__file__))+'/data.db'
 
 #----------------------------------Writing--------------------------------
 
@@ -25,7 +25,6 @@ def writePost(name,idu, newPost, profile, pic, lostFound, tags):
         q = "INSERT INTO foundPosts(id, name, uid, content, profile, picture, time, tagsChosen) VALUES(?,?,?,?,?,?,?,?)"
     cur.execute(q,(idp,name, idu, newPost, profile, pic, t, tags))
     conn.commit()
-    return str(idp)
 
 def writeComment(idp,name,idu,txt,profile,picture,lostFound):
     conn = sqlite3.connect(path)
@@ -34,7 +33,6 @@ def writeComment(idp,name,idu,txt,profile,picture,lostFound):
     idc = cur.execute(q).fetchone()[0]
     if idc == None:
         idc = 0
-    print idc+1
     t = time.strftime('%l:%M%p, %b %d %Y')
     q = "INSERT INTO comments(id,pid,uid,content,profile,picture,time,lostFound) VALUES(?,?,?,?,?,?,?,?)"
     cur.execute(q,(idc+1,idp,idu,txt,profile,picture,t,lostFound))
@@ -157,6 +155,40 @@ def getAllPosts(lostFound):
     conn.commit()
     return r
 
+def getTagPosts(lostFound, tag):
+    if tag=="#":
+        return getAllPosts(lostFound)
+    conn = sqlite3.connect(path)
+    cur = conn.cursor()
+    if lostFound == "lost":
+        q = "SELECT * FROM posts WHERE posts.tagsChosen = ?"
+    elif lostFound == "found":
+        q = "SELECT * FROM foundPosts WHERE posts.tagsChosen = ?"
+                
+    cur.execute(q,(tag,))
+    all_rows = cur.fetchall()
+
+    #Translate into JSON?
+    r = []
+    for row in all_rows:
+        r += [dict((cur.description[i][0], value) \
+              for i, value in enumerate(row))]
+
+    #with open('params.json', 'w') as f:
+    #    json.dump(r, f)
+
+    '''
+    with open('params.json', 'r') as f:
+        data = json.load(f)
+        print data
+    '''
+
+    final = []
+    for row in all_rows:
+        final.append(row)
+    
+    conn.commit()
+    return r
 
 
 def getAllUsers():

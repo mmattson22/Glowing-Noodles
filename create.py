@@ -4,8 +4,6 @@ conn = sqlite3.connect("data.db")
 
 c = conn.cursor()
 
-q = "drop table if exists users"
-c.execute(q)
 q = "drop table if exists posts"
 c.execute(q)
 q = "drop table if exists foundPosts"
@@ -13,16 +11,13 @@ c.execute(q)
 q = "drop table if exists comments"
 c.execute(q)
 
-q = "create table users(id integer, facebookid text)"
+q = "create table posts(id integer, name text, uid text, content text, profile text, picture text, time text, tagsChosen text)"
 c.execute(q)
 
-q = "create table posts(id integer, name text, uid integer, content text, profile text, picture text, time text, tagsChosen text)"
+q = "create table foundPosts(id integer, name text, uid text, content text, profile text, picture text, time text, tagsChosen text)"
 c.execute(q)
 
-q = "create table foundPosts(id integer, name text, uid integer, content text, profile text, picture text, time text, tagsChosen text)"
-c.execute(q)
-
-q = "create table comments(id integer, pid integer, uid integer, content text, profile text, picture text, time text, lostFound text)"
+q = "create table comments(id integer, pid integer, uid text, content text, profile text, picture text, time text, lostFound text)"
 c.execute(q)
 
 conn.commit()

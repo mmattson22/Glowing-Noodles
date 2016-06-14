@@ -1,5 +1,19 @@
 {% extends "base.html" %}
-
+{% block search %}
+	<form method="post" class="pure-form" style="padding: 0px 0px 0px 0.8em; display:inline">
+          <select name="q" class="pure-input-3-4">
+	    <option value="#" selected="selected">Everything</option>
+	    <option value="#Electronics">#Electronics</option>
+	    <option value="#Wallet">#Wallet</option>
+	    <option value="#ID">#ID</option>
+	    <option value="#Metrocard">#Metrocard</option>
+	    <option value="#Jewelry">#Jewelry</option>
+	    <option value="#School Supplies">#School Supplies</option>
+	    <option value="#Other">#Other</option>
+	  </select>
+          <button type="submit" class="button-small pure-button">Go</button>
+	</form>
+{% endblock search %}
 {% block body %}
 <div class="pure-g">
 <div class="pure-u-1">

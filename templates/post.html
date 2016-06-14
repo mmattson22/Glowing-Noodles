@@ -35,7 +35,7 @@
 <br>
 {% for each in comments %}
     <div>
-      <a href="http://facebook.com/{id}}"><img src={{each['profile']}} class="profile"></img></a>
+      <a href="http://facebook.com/{{each.uid}}"><img src={{each['profile']}} class="profile"></img></a>
       <span>{{each.time}}</span>
     </div>
     <div>
